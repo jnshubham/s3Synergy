@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>S3 - Synergy</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap-material-design.css')}}" >
+        <!--<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='loader.css')}}" >-->
+    </head>
+    <body>
+        <div class="container">
+            <div id="content" class="col-md-6">
+                <form method="POST" action="{{url_for('get_data')}}">
+                    <div class="form-group"></div>
+                    <legend class="border-bottom mb-4">S3-Synergy</legend>
+                    <div class="form-group">
+                        <label for="key" class="bmd-label-floating">FilePath:</label>    
+                        <input type="text" class="form-control" id="key"  name="key" required="" value="">
+                        <span class="bmd-help">Ex: s3://bucket_name/path/to/file/data.csv</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="format" class="bmd-label-floating">Format:</label>
+                        <select id="format" name="format" class="form-control col-sm-4">
+                            <option selected>Choose...</option>
+                            <option>CSV</option>
+                            <option>Json</option>
+                            <option>Parquet</option>
+                        </select>
+                    </div>
+                    <div id='csv'>
+                        <div class="form-group">
+                            <label for="header" class="bmd-label-floating">Header:</label>
+                            <select id="header" name="header_flag" class="form-control col-sm-4">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="head">
+                            <label for="header" class="bmd-label-floating">Headers:</label>
+                            <input class="form-control col-sm-4" id="headers" name="headers" type="text" value="">
+                            <span class="bmd-help">If file doesn't contains header provide comma-delimited headers</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="sep" class="bmd-label-floating">Separator:</label>
+                            <input class="form-control col-sm-4" id="sep" name="sep" type="text" value="">
+                            <span class="bmd-help">defaults to comma</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="qc" class="bmd-label-floating">quoteChar:</label>
+                            <input class="form-control col-sm-4" id="qc" name="qc" type="text" value="">
+                            <span class="bmd-help">defaults to double quotes</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lines" class="bmd-label-floating">LinesToFetch:</label>
+                            <input class="form-control col-sm-4" id="lines" name="lines" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="compression" class="bmd-label-floating">Compression:</label>
+                            <select id="compression" name="compression" class="form-control col-sm-4">
+                                <option selected>None</option>
+                                <option>GZIP</option>
+                                <option>BZIP2</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="query" class="bmd-label-floating">Query:</label>
+                        <textarea class="form-control" id="query" name="query" type="text" value="" rows="3"></textarea>
+                        <span class="bmd-help">Write SQL query</span>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-raised btn-primary" id="submit" name="submit"  type="submit" value="submit">
+                    </div>
+
+                </form>
+            </div>
+            <div class="container-fluid">
+                <div class="card">
+                    {{bytes_data|safe}}
+                </div>
+                <div class="dropdown float-right">
+                    {{dropdown|safe}}
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" name="download" href="{{url_for('download_data',dtype='csv')}}">CSV</a>
+                    <a class="dropdown-item" name="download" href="{{url_for('download_data',dtype='json')}}">Json</a>
+                    <a class="dropdown-item" name="download" href="{{url_for('download_data',dtype='excel')}}">Excel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">{{data|safe}}</div>
+            
+        </div>
+       
+       
+    
+       
+    <script src="{{url_for('static',filename='jquery-3.2.1.slim.min.js')}}"></script>
+    <script src="{{url_for('static',filename='popper.js')}}"></script>   
+    <script src="{{url_for('static',filename='bootstrap-material-design.js')}}"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#csv').hide();
+            $('#head').hide();
+        });
+        $('#format').change(function(){
+            if($(this).val()=='CSV'){
+                $('#csv').show();
+            }
+            else{
+                $('#csv').hide();
+            }
+
+        })
+        $('#header').change(function(){
+            if($(this).val()=='No'){
+                $('#head').show();
+            }
+            else{
+                $('#head').hide();
+            }
+
+        })
+    </script>
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+    
+
+    </body>
+</html>

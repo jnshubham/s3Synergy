@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>Duplicate Data Manager</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap.min.css')}}" >
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='loader.css')}}" >
+    </head>
+    <body>
+        <div id="content" class="col-md-9">
+            <form method="POST" action="">
+                <div class="form-group row"></div>
+                <legend class="border-bottom mb-4">S3-Synergy</legend>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">FilePath:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control form-control-sm" id="key" name="key" required="" type="text" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Format:</label>
+                    <div class="col-sm-3">
+                        <select id="format" class="form-control" onchange="format_selector()">
+                            <option selected>Choose...</option>
+                            <option>CSV</option>
+                            <option>Json</option>
+                            <option>Parquet</option>
+                          </select>
+                    </div>
+                </div>
+                <div id='csv'>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Header:</label>
+                        <div class="col-sm-3">
+                            <select id="header" class="form-control">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Headers:</label>
+                        <div class="col-sm-3">
+                            <input class="form-control form-control-sm" id="header" name="header" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Separator:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control form-control-sm" id="sep" name="sep" type="text" value="">
+                        </div>
+                        <label class="col-sm-2 col-form-label">quoteChar:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control form-control-sm" id="qc" name="qc" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Compression:</label>
+                    <div class="col-sm-3">
+                        <select id="compression" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>GZIP</option>
+                            <option>BZIP2</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">LinesToFetch:</label>
+                    <div class="col-sm-3">
+                        <input class="form-control form-control-sm" id="lines" name="lines" type="text" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Query:</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" id="query" name="query" type="text" value=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        <input class="btn btn-primary" id="submit" name="submit" onclick="" type="submit" value="submit">
+                    </div>
+                </div>
+
+            </form>
+            <div id="loading" class="loading"></div>
+        </div>
+       
+       
+    
+    <script src="{{url_for('static',filename='jquery-3.4.1.slim.min.js')}}"></script>
+    <script src="{{url_for('static',filename='popper.min.js')}}"></script>
+    <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='jquery.min.js')}}"></script>
+    <script>
+        $(function(){
+            $("#csv").hide();
+        });
+    </script>
+
+    </body>
+
+</html>
