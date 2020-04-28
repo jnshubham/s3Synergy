@@ -7,13 +7,39 @@
     <body>
         <div class="container">
             <div id="content" class="col-md-6">
-                <form method="POST" action="{{url_for('get_data')}}">
+                <form method="POST" action="{{url_for('get_data')}}" id="form_submit">
                     <div class="form-group"></div>
                     <legend class="border-bottom mb-4">S3-Synergy</legend>
-                    <div class="form-group">
-                        <label for="key" class="bmd-label-floating">FilePath:</label>    
-                        <input type="text" class="form-control" id="key"  name="key" required="" value="">
-                        <span class="bmd-help">Ex: s3://bucket_name/path/to/file/data.csv</span>
+                    <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="file" checked>
+                          Query on File
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="folder">
+                          Query on Folder
+                        </label>
+                    </div>
+                    <div id="file">
+                        <div class="form-group">
+                            <label for="key" class="bmd-label-floating">FilePath:</label>    
+                            <input type="text" class="form-control" id="key"  name="key" value="">
+                            <span class="bmd-help">Ex: s3://bucket_name/path/to/file/data.csv</span>
+                        </div>
+                    </div>
+                    <div id="folder">
+                        <div class="form-group">
+                            <label for="key" class="bmd-label-floating">FolderPath:</label>    
+                            <input type="text" class="form-control" id="key"  name="key" value="">
+                            <span class="bmd-help">Ex: s3://bucket_name/path/to/file/</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="wildcard" class="bmd-label-floating">Wildcard:</label>    
+                            <input type="text" class="form-control col-sm-4" id="wildcard"  name="wildcard" value="">
+                            <span class="bmd-help">Ex: load*.csv</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="format" class="bmd-label-floating">Format:</label>
@@ -62,7 +88,7 @@
                     </div>
                     <div class="form-group">
                         <label for="query" class="bmd-label-floating">Query:</label>
-                        <textarea class="form-control" id="query" name="query" type="text" value="" rows="3"></textarea>
+                        <textarea class="form-control" id="query" name="query" type="text" value="" rows="3" required></textarea>
                         <span class="bmd-help">Write SQL query</span>
                     </div>
                     <div class="form-group">
@@ -99,6 +125,7 @@
         $(document).ready(function(){
             $('#csv').hide();
             $('#head').hide();
+            $('#folder').hide();
         });
         $('#format').change(function(){
             if($(this).val()=='CSV'){
@@ -118,9 +145,24 @@
             }
 
         })
+        $('#optionsRadios2').click(function(){
+            $('#folder').show();
+            $('#file').hide();
+
+        })
+        $('#optionsRadios1').click(function(){
+            $('#folder').hide();
+            $('#file').show();
+
+        })
+        
     </script>
     <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
-    
+    <script>
+        $("#form_submit").submit(function(event) {
+            $("#submit").prop('disabled',true)
+        })
+    </script>
 
     </body>
 </html>
